@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     List<Food> mListFood;
     int mCurrentPage= 0;
     int mLastPage = 10;
+    boolean mIsLoading,mIsLastPage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         mListFood = Food.getFoodMock();
 
         mFoodAdapter = new FoodAdapter(mListFood);
-
+        mCurrentPage = 1;
+        mFoodAdapter.addLoading();
         mRcvFood.setHasFixedSize(true);
         mRcvFood.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         mRcvFood.setAdapter(mFoodAdapter);
@@ -46,19 +48,25 @@ public class MainActivity extends AppCompatActivity {
         mRcvFood.addOnScrollListener(new PaginationScrollListener((LinearLayoutManager) mRcvFood.getLayoutManager()) {
             @Override
             public void loadMoreItem() {
+                mIsLoading = true;
+                mCurrentPage += 1;
 
+                loadDataNextPage();
             }
 
             @Override
             public boolean isLoading() {
-                return false;
+                return mIsLoading;
             }
 
             @Override
             public boolean isLastPage() {
-                return false;
+                return mIsLastPage;
             }
         });
 
+    }
+
+    private void loadDataNextPage() {
     }
 }
