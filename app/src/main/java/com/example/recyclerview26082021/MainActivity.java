@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         mFoodAdapter.setOnItemClickRecyclerview(new OnItemClickRecyclerview() {
             @Override
             public void onClick(int position) {
-                Toast.makeText(MainActivity.this, mListFood.get(position).getName(), Toast.LENGTH_SHORT).show();
+                mListFood.remove(position);
+                mFoodAdapter.notifyItemRemoved(position);
             }
         });
 
