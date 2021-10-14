@@ -5,15 +5,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder>{
+public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
 
     private List<Food> foodList;
+    private OnItemClickRecyclerview onItemClickRecyclerview;
 
     public FoodAdapter(List<Food> foodList){
         this.foodList = foodList;
@@ -51,6 +53,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             tvCategory = itemView.findViewById(R.id.textViewCategory);
             tvDistance = itemView.findViewById(R.id.textViewDistance);
             tvRating = itemView.findViewById(R.id.textViewRating);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClickRecyclerview != null){
+                        onItemClickRecyclerview.onClick(getAdapterPosition());
+                    }
+                }
+            });
         }
         public void bind(Food food){
             img.setImageResource(food.getImage());
@@ -60,5 +71,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             tvDistance.setText(food.getDistance() + "km");
             tvRating.setText(food.getRating() + "");
         }
+    }
+
+    public void setOnItemClickRecyclerview(OnItemClickRecyclerview onItemClickRecyclerview){
+        this.onItemClickRecyclerview = onItemClickRecyclerview;
     }
 }
