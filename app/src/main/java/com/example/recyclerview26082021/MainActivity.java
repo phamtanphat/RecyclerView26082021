@@ -3,6 +3,7 @@ package com.example.recyclerview26082021;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRcvFood;
     FoodAdapter mFoodAdapter;
     List<Food> mListFood;
+    int mCurrentPage= 0;
+    int mLastPage = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(int position) {
                 mListFood.remove(position);
                 mFoodAdapter.notifyItemRemoved(position);
+            }
+        });
+
+        mRcvFood.addOnScrollListener(new PaginationScrollListener((LinearLayoutManager) mRcvFood.getLayoutManager()) {
+            @Override
+            public void loadMoreItem() {
+
+            }
+
+            @Override
+            public boolean isLoading() {
+                return false;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return false;
             }
         });
 

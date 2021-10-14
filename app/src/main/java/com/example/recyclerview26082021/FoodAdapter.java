@@ -107,4 +107,15 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void setOnItemClickRecyclerview(OnItemClickRecyclerview onItemClickRecyclerview) {
         this.onItemClickRecyclerview = onItemClickRecyclerview;
     }
+
+    public void addLoading(){
+        isLoading = true;
+        foodList.add(null);
+    }
+    public void removeLoading(){
+        isLoading = false;
+        int position = foodList.size() - 1;
+        foodList.remove(position);
+        notifyItemRemoved(position);
+    }
 }
