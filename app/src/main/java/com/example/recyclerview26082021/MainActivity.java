@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -68,5 +69,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadDataNextPage() {
+        new CountDownTimer(2000, 2000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                mFoodAdapter.removeLoading();
+                mListFood.addAll(Food.getFoodMock());
+                mFoodAdapter.notifyDataSetChanged();
+                mIsLoading = false;
+
+                if (mCurrentPage < mLastPage){
+                    mFoodAdapter.addLoading();
+                }else{
+                    mIsLastPage = true;
+                }
+            }
+        }.start();
     }
 }
